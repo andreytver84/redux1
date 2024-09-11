@@ -1,11 +1,10 @@
-import { ITodo, ITodoListProps } from "../model/types";
+import { useSelector } from "react-redux";
+import { ITodo } from "../model/types";
 import { TodoItem } from "./TodoItem";
 
-export const TodoList = ({
-  todos,
-  toggleTodoComplete,
-  removeTodo,
-}: ITodoListProps) => {
+export const TodoList = () => {
+  const todos = useSelector((state) => state.todos.todos);
+  console.log(todos);
   return (
     <>
       <ul>
@@ -15,8 +14,8 @@ export const TodoList = ({
             id={todo.id}
             text={todo.text}
             complited={todo.complited}
-            toggleTodoComplete={toggleTodoComplete}
-            removeTodo={removeTodo}
+            // toggleTodoComplete={toggleTodoComplete}
+            // removeTodo={removeTodo}
           />
         ))}
       </ul>

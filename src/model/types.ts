@@ -4,11 +4,11 @@ export interface ITodo {
   complited: boolean;
 }
 
-export interface ITodoListProps {
-  todos: ITodo[];
-  toggleTodoComplete: (id: string) => void;
-  removeTodo: (id: string) => void;
-}
+// export interface ITodoListProps {
+//   //   todos: ITodo[];
+//   toggleTodoComplete: (id: string) => void;
+//   removeTodo: (id: string) => void;
+// }
 
 export interface ITodoItemProps {
   id: string;
