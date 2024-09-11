@@ -1,12 +1,9 @@
 import { useState } from "react";
 import "./App.css";
 import { nanoid } from "nanoid";
-
-interface ITodo {
-  id: string;
-  text: string;
-  complited: boolean;
-}
+import { InputField } from "./components/InputField";
+import { TodoList } from "./components/TodoList";
+import { ITodo } from "./model/types";
 
 function App() {
   const [todos, setTodos] = useState<ITodo[]>([]);
@@ -44,30 +41,13 @@ function App() {
 
   return (
     <>
-      <label>
-        <input
-          value={text}
-          onChange={(e) => {
-            setText(e.target.value);
-          }}
-        />
-      </label>
-      <button onClick={addTodo}>Add todo</button>
-      <ul>
-        {todos.map((todo) => (
-          <li key={todo.id}>
-            <input
-              type="checkbox"
-              checked={todo.complited}
-              onChange={() => toggleTodoComplete(todo.id)}
-            />
-            <span>{todo.text}</span>
-            <span className="delete" onClick={() => removeTodo(todo.id)}>
-              &times;
-            </span>
-          </li>
-        ))}
-      </ul>
+      <InputField text={text} handleText={setText} handleSubmit={addTodo} />
+
+      <TodoList
+        todos={todos}
+        removeTodo={removeTodo}
+        toggleTodoComplete={toggleTodoComplete}
+      />
     </>
   );
 }
