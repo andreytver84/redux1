@@ -3,6 +3,40 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { nanoid } from "nanoid";
 import { ITodo, ITodoState } from "../model/types";
 
+export const addNewTodo = createAsyncThunk(
+  "todos/addNewTodo",
+  async function (text, { rejectWithValue, dispatch }) {
+    try {
+      const todo = {
+        title: text,
+        userId: 1,
+        complited: false,
+      };
+
+      const response = await fetch(
+        `https://jsonplaceholder.typicode.com/todos/`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(todo),
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Can`t add todo");
+      }
+
+      const data = await response.json();
+      dispatch(addTodo(data));
+    } catch (error) {
+      return rejectWithValue(
+        error instanceof Error ? error.message : "Unknown error"
+      );
+    }
+  }
+);
+
 export const deleteTodo = createAsyncThunk(
   "todos/deleteTodo",
   async function (id, { rejectWithValue, dispatch }) {
@@ -26,7 +60,7 @@ export const deleteTodo = createAsyncThunk(
 );
 
 export const toggleStatus = createAsyncThunk(
-  "todos/deleteTodo",
+  "todos/toggleStatus",
   async function (id, { rejectWithValue, dispatch, getState }) {
     const todo = getState().todos.todos.find((todo) => id === todo.id);
 
@@ -86,11 +120,7 @@ const todoSlice = createSlice({
   initialState,
   reducers: {
     addTodo(state, action) {
-      state.todos.push({
-        id: nanoid(5),
-        title: action.payload,
-        complited: false,
-      });
+      state.todos.push(action.payload);
     },
     removeTodo(state, action) {
       state.todos = state.todos.filter((todo) => action.payload !== todo.id);
@@ -115,10 +145,22 @@ const todoSlice = createSlice({
       .addCase(fetchTodos.rejected, (state, action) => {
         state.status = "rejected";
         state.error = action.payload as string;
+      })
+      .addCase(deleteTodo.rejected, (state, action) => {
+        state.status = "rejected";
+        state.error = action.payload as string;
+      })
+      .addCase(toggleStatus.rejected, (state, action) => {
+        state.status = "rejected";
+        state.error = action.payload as string;
+      })
+      .addCase(addNewTodo.rejected, (state, action) => {
+        state.status = "rejected";
+        state.error = action.payload as string;
       });
   },
 });
 
-export const { addTodo, toggleTodoComplete, removeTodo } = todoSlice.actions;
+const { addTodo, toggleTodoComplete, removeTodo } = todoSlice.actions;
 
 export default todoSlice.reducer;

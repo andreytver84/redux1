@@ -4,7 +4,7 @@ import "./App.css";
 import { InputField } from "./components/InputField";
 import { TodoList } from "./components/TodoList";
 import { useDispatch, useSelector } from "react-redux";
-import { addTodo, fetchTodos } from "./store/todoSlice";
+import { addNewTodo, fetchTodos } from "./store/todoSlice";
 import { RootState } from "./model/types";
 
 function App() {
@@ -14,7 +14,7 @@ function App() {
   const dispatch = useDispatch();
 
   const addTask = () => {
-    dispatch(addTodo(text));
+    dispatch(addNewTodo(text));
     setText("");
   };
 
