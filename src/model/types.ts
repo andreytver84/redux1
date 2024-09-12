@@ -4,18 +4,22 @@ export interface ITodo {
   complited: boolean;
 }
 
-// export interface ITodoListProps {
-//   //   todos: ITodo[];
-//   toggleTodoComplete: (id: string) => void;
-//   removeTodo: (id: string) => void;
-// }
+// Интерфейс для состояния todos
+export interface ITodoState {
+  todos: ITodo[];
+}
+
+// Интерфейс для всего состояния приложения
+export interface RootState {
+  todos: ITodoState;
+}
 
 export interface ITodoItemProps {
   id: string;
   text: string;
   complited: boolean;
-  toggleTodoComplete: (id: string) => void;
-  removeTodo: (id: string) => void;
+  // toggleTodoComplete: (id: string) => void;
+  // removeTodo: (id: string) => void;
 }
 export interface IInputFieldProps {
   text: string;
