@@ -1,12 +1,14 @@
 export interface ITodo {
   id: string;
-  text: string;
+  title: string;
   complited: boolean;
 }
 
 // Интерфейс для состояния todos
 export interface ITodoState {
   todos: ITodo[];
+  status: string | null;
+  error: string | null;
 }
 
 // Интерфейс для всего состояния приложения

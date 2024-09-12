@@ -4,7 +4,7 @@ import { TodoItem } from "./TodoItem";
 
 export const TodoList = () => {
   const todos = useSelector((state: RootState) => state.todos.todos);
-  console.log(todos);
+
   return (
     <>
       <ul>
@@ -12,7 +12,7 @@ export const TodoList = () => {
           <TodoItem
             key={todo.id}
             id={todo.id}
-            text={todo.text}
+            text={todo.title}
             complited={todo.complited}
           />
         ))}
